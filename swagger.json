@@ -1,0 +1,186 @@
+{
+	"openapi": "3.0.0",
+	"servers": [
+		{
+			"description": "ERC20 Wallet Address",
+			"url": "http://127.0.0.1:7001/api"
+		}
+	],
+	"info": {
+		"version": "1.0.0",
+		"title": "ERC20 Wallet Address",
+		"description": "Generate ERC20 Wallet Address",
+		"contact": {
+			"name": "GenerateWalletAddress",
+			"url": ""
+		}
+	},
+	"host": "127.0.0.1:7001",
+	"basePath": "/api/",
+	"schemes": [
+		"http",
+		"https"
+	],
+	"tags": [
+		{
+			"name": "Wallets Controller",
+			"description": "Contains Wallet API"
+		}
+	],
+	"paths": {
+		"/wallets/new": {
+			"get": {
+				"tags": [
+					"Wallets Controller"
+				],
+				"description": "create new wallet address",
+				"summary": "This API is used to create new wallet address",
+				"operationId": "new",
+				"produces": [
+					"application/json"
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"items": {
+										"$ref": "#/definitions/SuccessResponse"
+									}
+								}
+							}
+						}
+					},
+					"default": {
+						"description": "Error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"items": {
+										"$ref": "#/definitions/ErrorResponse"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/wallets/generateKeystore": {
+			"post": {
+				"tags": [
+					"Wallets Controller"
+				],
+				"description": "generate keystore",
+				"summary": "This API use to generate keystore data object",
+				"operationId": "keystore",
+				"produces": [
+					"application/json"
+				],
+				"requestBody": {
+					"description": "Generate Keystore",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"privateKey": {"type": "string", "required": true},
+									"password": {"type": "string", "required": true},
+									"email": {"type": "string", "required": true}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"items": {
+										"$ref": "#/definitions/SuccessResponse"
+									}
+								}
+							}
+						}
+					},
+					"default": {
+						"description": "Error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"items": {
+										"$ref": "#/definitions/ErrorResponse"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/wallets/restorePrivateKey": {
+			"post": {
+				"tags": [
+					"Wallets Controller"
+				],
+				"description": "restore privateKey",
+				"summary": "This API use to restore the private key by passing the keystore file and password in params",
+				"operationId": "restorePrivateKey",
+				"produces": [
+					"application/json"
+				],
+				"requestBody": {
+					"description": "Generate Keystore",
+					"required": true,
+					"content": {
+						"multipart/form-data": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"key": {"type": "string", "format": "binary", "required": true},
+									"password": {"type": "string", "required": true}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"items": {
+										"$ref": "#/definitions/SuccessResponse"
+									}
+								}
+							}
+						}
+					},
+					"default": {
+						"description": "Error",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"items": {
+										"$ref": "#/definitions/ErrorResponse"
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

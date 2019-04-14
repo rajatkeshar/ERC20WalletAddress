@@ -1,28 +1,24 @@
 var fs = require('fs');
 
-module.exports = function(app, http) {
+module.exports = function(app) {
 
-    /* reading all modules folders */
-    fs.readdirSync('./modules').forEach(function(module) {
-        var controllerDir = './modules/' + module + '/controllers/';
+    /* reading all controllers folders */
+    var controllerDir = global.appDir + '/routes/controllers/';
 
-        /* checking if controller folder exist in defined module or not */
-        if (fs.existsSync(controllerDir)) {
-            var models = require(global.appDir + '/modules/' + module + '/factory');
+    /* checking if controller folder exist in defined module or not */
+    if (fs.existsSync(controllerDir)) {
+        var models = require(global.appDir + '/routes/factory');
 
-            /* including all controllers of all modules */
-            fs.readdirSync(controllerDir).forEach(function(file) {
+        /* including all controllers of all modules */
+        fs.readdirSync(controllerDir).forEach( (file) => {
 
-                /* include only js files */
-                if (file.substr(-3) === '.js') {
-                    route = require(controllerDir + file);
-                    (typeof route.http != 'undefined') ? route.http = http: '';
-                    route.controller(app, models);
-                }
-            });
-            console.log(module + ' loaded');
-        }
-
-        delete controllerDir; // removing unused variable
-    });
+            /* include only js files */
+            if (file.substr(-3) === '.js') {
+                route = require(controllerDir + file);
+                route.controller(app, models);
+            }
+        });
+        console.log('controllers loaded');
+    }
+    delete controllerDir; // removing unused variable
 };
