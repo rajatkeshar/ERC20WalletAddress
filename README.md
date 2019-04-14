@@ -1,4 +1,4 @@
-#ERC20WalletAddress
+# ERC20WalletAddress
 
 This repository use to generate ERC20 wallet addresses.
 
